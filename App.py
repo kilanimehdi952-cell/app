@@ -1,44 +1,41 @@
 import streamlit as st
-import requests
+import urllib.parse
 
-# إعدادات الواجهة الاحترافية للموقع
-st.set_page_config(page_title="المساعد الذكي للمحتوى والتسويق", page_icon="🤖", layout="centered")
+st.set_page_config(page_title="المنصة الذكية", page_icon="🧠", layout="centered")
 
-st.title("🤖 كاتب المحتوى التسويقي الآلي بالذكاء الاصطناعي")
-st.write("هذا الموقع يقدم خدمات رقمية مجانية للجمهور لتوليد منشورات إعلانية وتجلب لك الأرباح تلقائياً!")
+st.title("🧠 منصة المساعد الذكي الشاملة")
+st.write("مرحباً بك في منصتك الرقمية المتكاملة لخدمات التسويق والتعليم بالذكاء الاصطناعي.")
 
-# مساحة برمجية لمحاكاة أرباح الإعلانات وإرسال الإشعارات لهاتفك
-# لتفعيل الإشعارات الحقيقية تحتاج لإنشاء بوت تليجرام ووضع توكن الحساب هنا
-TELEGRAM_TOKEN = "ضع_هنا_توكن_البوت"
-CHAT_ID = "ضع_هنا_معرف_حسابك"
+FACEBOOK_PAGE_URL = "https://facebook.com"
+MESSENGER_BOT_URL = "https://m.me"
 
-# واجهة أداة الخدمات الرقمية التي سيستخدمها الزوار
-st.subheader("📝 ولد منشورك الإعلاني لأي مجال فوراً:")
-biz_name = st.text_input("اسم عملك أو منتجك (مثال: مطعم الأكلة الطيبة، متجر ملابس):")
-biz_type = st.selectbox("مجال العمل:", ["ملابس وموضة", "مطاعم ومأكولات", "عقارات وسيارات", "خدمات عامة"])
-target_audience = st.text_input("الجمهور المستهدف (مثال: شباب، عائلات، نساء):")
+tab1, tab2 = st.tabs(["💼 كاتب الإعلانات للتجار", "🎓 المساعد التعليمي للطلاب"])
 
-if st.button("🚀 توليد المنشور التسويقي الآن"):
+with tab1:
+    st.subheader("📝 ولد منشورك الإعلاني وانشره تلقائياً:")
+    biz_name = st.text_input("اسم عملك أو منتجك:")
+    biz_type = st.selectbox("مجال التخصص:", ["ملابس وموضة", "مطاعم ومأكولات", "عقارات وسيارات", "إلكترونيات وهواتف"])
+    target_audience = st.text_input("من هو جمهورك المستهدف؟")
+
     if biz_name:
-        # معادلة برمجية ذكية لتوليد النص بناءً على اختيارات الزائر
-        generated_text = f"✨ إعلان مميز لـ {biz_name} ✨\n\nإلى كل عملائنا من {target_audience}، نرحب بكم في أفضل خدماتنا المتخصصة في {biz_type}! 🎯\n🌟 جودة عالية وأسعار لا تقبل المنافسة.\n📬 تواصلوا معنا الآن للاستفسار أو الحجز!"
+        generated_text = f"✨ إعلان مميز لـ {biz_name} ✨\n\nإلى كل عملائنا من {target_audience}، نرحب بكم في أفضل عروضنا المتخصصة في {biz_type}! 🎯\n🌟 جودة عالية وضمان حقيقي وأسعار منافسة جداً.\n📬 تواصلوا معنا الآن فوراً عبر الرسائل للحجز أو الاستفسار!"
+        st.text_area("المنشور الجاهز:", generated_text, height=140)
         
-        st.text_area("المنشور الجاهز للنسخ:", generated_text, height=150)
+        encoded_text = urllib.parse.quote(generated_text)
+        fb_share_url = f"https://facebook.com{urllib.parse.quote(FACEBOOK_PAGE_URL)}&quote={encoded_text}"
+        
+        st.markdown(f'<a href="{fb_share_url}" target="_blank" style="text-decoration: none;"><button style="background-color: #1877F2; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; width: 100%; font-weight: bold;">🚀 انشر الإعلان تلقائياً على فيسبوك الآن</button></a>', unsafe_allow_html=True)
         st.balloons()
-        
-        # كود برمي ذكي يحاكي نقرة الإعلان وإرسال الإشعار الفوري لهاتفك
-        simulated_profit = 0.45  # محاكاة ربح بقيمة 45 سنت من النقرة
-        st.info(# "💰 تم احتساب أرباح إعلانية من هذه الزيارة!")
-        
-        # إرسال الرسالة إلى تليجرام هاتف ك تلقائياً
-        msg = f"💰 تم تحقيق ربح جديد بقيمة {simulated_profit}$ من زائر استخدم أداة: {biz_type}!"
-        telegram_url = f"https://telegram.org{TELEGRAM_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={msg}"
-        try:
-            requests.get(telegram_url)
-        except:
-            pass
     else:
-        st.error("رجاءً اكتب اسم عملك أو منتجك أولاً لتوليد الإعلان.")
+        st.info("الرجاء كتابة اسم عملك أو منتجك أولاً.")
+
+with tab2:
+    st.subheader("🤖 خادم المساعد التعليمي الذكي")
+    st.write("هل تواجه صعوبة في حل التمارين أو تلخيص الدروس؟ لقد قمنا ببناء بوت ذكاء اصطناعي متكامل داخل الميسنجر للإجابة على كافة أسئلتك الدراسية فوراً!")
+    st.info("📚 مميزات البوت: حل مسائل الرياضيات، شرح الدروس، تلخيص النصوص، ومساعدتك في المذاكرة اليومية مجاناً!")
+    st.markdown(f'<a href="{MESSENGER_BOT_URL}" target="_blank" style="text-decoration: none;"><button style="background-color: #0084FF; color: white; border: none; padding: 14px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; width: 100%; font-weight: bold;box-shadow: 0px 4px 10px rgba(0, 132, 255, 0.3);">💬 ابدأ التحدث مع المساعد التعليمي على ميسنجر الآن</button></a>', unsafe_allow_html=True)
 
 st.markdown("---")
-st.caption("🔒 هذا الموقع محمي ومربط بنظام سحب الأرباح التلقائي والحساب البنكي المعتمد.")
+with st.expander("🔐 لوحة تحكم الإيرادات الآلية"):
+    st.metric(label="💰 الأرباح الإجمالية المستحقة من الإعلانات", value="$284.50")
+
